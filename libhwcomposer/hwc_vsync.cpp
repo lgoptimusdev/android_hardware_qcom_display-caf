@@ -111,7 +111,7 @@ static void *vsync_loop(void *param)
                         ALOGE ("FATAL:%s:not able to read file:%s, %s",
                                __FUNCTION__,
                                vsync_timestamp_fb0, strerror(errno));
-                        continue;
+                        ctx->vstate.fakevsync = true;
                     }
                     // extract timestamp
                     const char *str = vdata;
@@ -123,7 +123,7 @@ static void *vsync_loop(void *param)
             } else {
                 ALOGE("%s: vsync poll failed errno: %s", __FUNCTION__,
                       strerror(errno));
-                continue;
+                ctx->vstate.fakevsync = true;
             }
         } else {
             usleep(16666);
